@@ -488,7 +488,7 @@
     {
         "id": "9fa73108ebd10193",
         "type": "ui_tab",
-        "name": "CVM",
+        "name": "CVMd",
         "icon": "dashboard",
         "order": 1,
         "disabled": false,
