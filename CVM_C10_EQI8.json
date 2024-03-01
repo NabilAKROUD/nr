@@ -1,0 +1,497 @@
+[
+    {
+        "id": "ec4ecc87b7fdcd02",
+        "type": "inject",
+        "z": "3a33f622b544cc1b",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "4",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 110,
+        "y": 40,
+        "wires": [
+            [
+                "d7f1fcf8548b2f72"
+            ]
+        ]
+    },
+    {
+        "id": "d7f1fcf8548b2f72",
+        "type": "function",
+        "z": "3a33f622b544cc1b",
+        "name": "fc3-id6",
+        "func": "msg.payload = {\n    //value: msg.payload,\n    'fc': 3, \n    'unitid': 6,\n    'address': 0x0,\n    'quantity': 0x46 \n    } \n\nreturn msg\n",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 90,
+        "y": 80,
+        "wires": [
+            [
+                "c5e72a295fdd745b"
+            ]
+        ]
+    },
+    {
+        "id": "c5e72a295fdd745b",
+        "type": "modbus-flex-getter",
+        "z": "3a33f622b544cc1b",
+        "name": "",
+        "showStatusActivities": true,
+        "showErrors": true,
+        "showWarnings": true,
+        "logIOActivities": false,
+        "server": "29e54e5ad8dcbd66",
+        "useIOFile": false,
+        "ioFile": "",
+        "useIOForPayload": false,
+        "emptyMsgOnFail": true,
+        "keepMsgProperties": true,
+        "delayOnStart": false,
+        "startDelayTime": "",
+        "x": 130,
+        "y": 120,
+        "wires": [
+            [
+                "a00ad9ad32d87d6c",
+                "ebb72df448f19fa4",
+                "98d880e63d594a0b",
+                "c921bed51ff991df",
+                "e4b71f42fcd48dc6",
+                "bb4c630ae0dd6975",
+                "bf8345cbe03a0f15"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "ebb72df448f19fa4",
+        "type": "function",
+        "z": "3a33f622b544cc1b",
+        "name": "unit",
+        "func": "var regi = [\n [\"V \"] ,\n [\"V \"] ,\n [\"V \"] ,\n\n [\"A \"] ,\n [\"A \"] ,\n [\"A \"] ,\n\n [\"W \"],\n [\"W \"] ,\n [\"W \"] ,\n \n [\"varL \"] ,\n [\"varL \"] ,\n [\"varL \"] ,\n\n [\"varC \"] ,\n [\"varC \"] ,\n [\"varC \"] ,\n\n [\"VA \"] ,\n [\"VA \"] ,\n [\"VA \"] ,\n\n [\"- \"] ,\n [\"- \"] ,\n [\"- \"] ,\n\n [\"-\"] ,\n [\"-\"] ,\n [\"-\"] ,\n\n [\"W \"] ,\n [\"varL \"] ,\n [\"varC \"] ,\n [\"VA \"] ,\n [\"-\"] ,\n [\"-\"] ,\n\n [\"Hz\"] ,\n\n [\"V\"] ,\n [\"V\"] ,\n [\"V\"] ,\n \n [\"A\"]];\nmsg.payload = regi;\nreturn msg;",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 370,
+        "y": 160,
+        "wires": [
+            [
+                "b5bb50e6f4dc2a2d"
+            ]
+        ]
+    },
+    {
+        "id": "b5bb50e6f4dc2a2d",
+        "type": "ui_template",
+        "z": "3a33f622b544cc1b",
+        "group": "2702adcb99ee2f30",
+        "name": "units",
+        "order": 4,
+        "width": 2,
+        "height": 19,
+        "format": "<table id=\"table\" border=\".1\">\n <tr>\n <th>Unit</th>\n </tr>\n <tbody>\n <tr ng-repeat=\"row in msg.payload\">\n <td ng-repeat=\"item in row\" >{{item}}</td>\n </tr>\n </tbody>\n</table>\n\n",
+        "storeOutMessages": false,
+        "fwdInMessages": true,
+        "resendOnRefresh": false,
+        "templateScope": "local",
+        "className": "",
+        "x": 730,
+        "y": 160,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "a00ad9ad32d87d6c",
+        "type": "function",
+        "z": "3a33f622b544cc1b",
+        "name": "items",
+        "func": "var regi = [\n    [\"V1      \"],\n    [\"V2      \"],\n    [\"V3      \"],\n\n    [\"A1      \"],\n    [\"A2      \"],\n    [\"A3      \"],\n\n    [\"kW1     \"],\n    [\"kW2     \"],\n    [\"kW3     \"],\n\n    [\"kvarL1  \"],\n    [\"kvarL2  \"],\n    [\"kvarL3  \"],\n    \n    [\"kvarC1  \"],\n    [\"kvarC2  \"],\n    [\"kvarC3  \"],\n\n    [\"kVA1    \"],\n    [\"kVA2    \"],\n    [\"kVA3    \"],\n\n    [\"PF1     \"],\n    [\"PF2     \"],\n    [\"PF3     \"],\n\n    [\"CosPhi1 \"],\n    [\"CosPhi2 \"],\n    [\"CosPhi3 \"],\n\n    [\"kWIII   \"],\n    [\"kvarLIII\"],\n    [\"kvarCIII\"],\n    [\"kVAIII  \"],\n    [\"PFIII   \"],\n    [\"CosPhiII\"],\n\n    [\"Hz      \"],\n\n    [\"V12     \"],\n    [\"V23     \"],\n    [\"V31     \"],\n    \n    [\"AN      \"]];\nmsg.payload = regi;\nreturn msg;",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 370,
+        "y": 80,
+        "wires": [
+            [
+                "1e01f0c03ffb60cc"
+            ]
+        ]
+    },
+    {
+        "id": "1e01f0c03ffb60cc",
+        "type": "ui_template",
+        "z": "3a33f622b544cc1b",
+        "group": "2702adcb99ee2f30",
+        "name": "Variable",
+        "order": 2,
+        "width": 2,
+        "height": 19,
+        "format": "<table id=\"table\" border=\".1\">\n <tr>\n <th>item</th>\n </tr>\n <tbody>\n <tr ng-repeat=\"row in msg.payload\">\n <td ng-repeat=\"item in row\" >{{item}}</td>\n </tr>\n </tbody>\n</table>\n\n",
+        "storeOutMessages": false,
+        "fwdInMessages": true,
+        "resendOnRefresh": false,
+        "templateScope": "local",
+        "className": "",
+        "x": 720,
+        "y": 80,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "9b65c102250fdc0e",
+        "type": "csv",
+        "z": "3a33f622b544cc1b",
+        "name": "",
+        "sep": ";",
+        "hdrin": true,
+        "hdrout": "once",
+        "multi": "mult",
+        "ret": "\\r\\n",
+        "temp": "\"timestamp\",\"V1\",\"V2\",\"V3\",\"A1\",\"A2\",\"A3\",\"kW1\",\"kW2\",\"kW3\",\"kvarL1\",\"kvarL2\",\"kvarL3\",\"kvarC1\",\"kvarC2\",\"kvarC3\",\"kVA1\",\"kVA2\",\"kVA3\",\"PF1\",\"PF2\",\"PF3\",\"CosPhi1\",\"CosPhi2\",\"CosPhi3\",\"kWIII\",\"kvarLIII\",\"kvarCIII\",\"kVAIII\",\"PFIII\",\"CosPhiII\",\"Hz\",\"V12\",\"V23\",\"V31\",\"AN\"",
+        "skip": "0",
+        "strings": true,
+        "include_empty_strings": false,
+        "include_null_values": false,
+        "x": 730,
+        "y": 200,
+        "wires": [
+            [
+                "a883e507b2f622e8"
+            ]
+        ]
+    },
+    {
+        "id": "9e5844d55e9e991d",
+        "type": "file",
+        "z": "3a33f622b544cc1b",
+        "name": "file",
+        "filename": "filename",
+        "filenameType": "msg",
+        "appendNewline": false,
+        "createDir": true,
+        "overwriteFile": "false",
+        "encoding": "none",
+        "x": 730,
+        "y": 280,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "a883e507b2f622e8",
+        "type": "function",
+        "z": "3a33f622b544cc1b",
+        "name": "",
+        "func": "var now = new Date();\n// Create formatted time\nvar yyyy = now.getFullYear();\nvar mm = now.getMonth() < 9 ? \"0\" + (now.getMonth() + 1) : (now.getMonth() + 1); // getMonth() is zero-based\nvar dd = now.getDate() < 10 ? \"0\" + now.getDate() : now.getDate();\nvar hh = now.getHours() < 10 ? \"0\" + now.getHours() : now.getHours();\nvar mmm = now.getMinutes() < 10 ? \"0\" + now.getMinutes() : now.getMinutes();\nvar ss = now.getSeconds() < 10 ? \"0\" + now.getSeconds() : now.getSeconds();\n\nvar path = \"/home/pi/logs/\"; // This is the path    Month+mm+\"/\"\nvar filename = yyyy + \"-\" + mm + \"-\" + dd + \"\\xa0\"+\"CVM6.csv\"; // file name  \"_\"+hh+mmm+ss+\"   \"_\"+mmm+\nmsg.filename = path + filename;\nreturn msg;",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 720,
+        "y": 240,
+        "wires": [
+            [
+                "9e5844d55e9e991d"
+            ]
+        ],
+        "outputLabels": [
+            "msg.filename"
+        ]
+    },
+    {
+        "id": "c921bed51ff991df",
+        "type": "function",
+        "z": "3a33f622b544cc1b",
+        "name": "function 2",
+        "func": "var fecha = Date.now();\nvar regi = [\n    [fecha/86400000+25569,msg.payload[0]*0x1000+msg.payload[1]/10,msg.payload[16]*0x1000+msg.payload[17]/10,msg.payload[32]*0x1000+msg.payload[33]/10,msg.payload[2]*0x1000+msg.payload[3]/1000,msg.payload[18]*0x1000+msg.payload[19]/10,msg.payload[34]*0x1000+msg.payload[35]/10,msg.payload[4]*0x1000+msg.payload[5]/1,msg.payload[20]*0x1000+msg.payload[21]/10,msg.payload[36]*0x1000+msg.payload[37]/10,msg.payload[6]*0x1000+msg.payload[7]/10,msg.payload[22]*0x1000+msg.payload[23]/10,msg.payload[38]*0x1000+msg.payload[39]/10,msg.payload[8]*0x1000+msg.payload[9]/10,msg.payload[24]*0x1000+msg.payload[25]/10,msg.payload[40]*0x1000+msg.payload[41]/10,msg.payload[10]*0x1000+msg.payload[11]/10,msg.payload[26]*0x1000+msg.payload[27]/10,msg.payload[42]*0x1000+msg.payload[43]/10,msg.payload[12]*0x1000+msg.payload[13]/10,msg.payload[28]*0x1000+msg.payload[29]/10,msg.payload[44]*0x1000+msg.payload[45]/10,msg.payload[14]*0x1000+msg.payload[15]/10,msg.payload[30]*0x1000+msg.payload[31]/10,msg.payload[46]*0x1000+msg.payload[47]/10,msg.payload[48]*0x1000+msg.payload[49]/10,msg.payload[50]*0x1000+msg.payload[51]/10,msg.payload[52]*0x1000+msg.payload[53]/10,msg.payload[54]*0x1000+msg.payload[55]/10,msg.payload[56]*0x1000+msg.payload[57]/10,msg.payload[58]*0x1000+msg.payload[59]/10,msg.payload[60]*0x1000+msg.payload[61]/100,msg.payload[62]*0x1000+msg.payload[63]/10,msg.payload[64]*0x1000+msg.payload[65]/10,msg.payload[66]*0x1000+msg.payload[67]/10,msg.payload[68]*0x1000+msg.payload[69]/10]];\nmsg.payload = regi;\nreturn msg;\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 380,
+        "y": 200,
+        "wires": [
+            [
+                "9b65c102250fdc0e"
+            ]
+        ]
+    },
+    {
+        "id": "43b4e2a6f0c9d239",
+        "type": "inject",
+        "z": "3a33f622b544cc1b",
+        "name": "Clear",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "v": "",
+                "vt": "date"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "[\"timestamp\",\"V1\",\"V2\",\"V3\",\"A1\",\"A2\",\"A3\",\"kW1\",\"kW2\",\"kW3\",\"kvarL1\",\"kvarL2\",\"kvarL3\",\"kvarC1\",\"kvarC2\",\"kvarC3\",\"kVA1\",\"kVA2\",\"kVA3\",\"PF1\",\"PF2\",\"PF3\",\"CosPhi1\",\"CosPhi2\",\"CosPhi3\",\"kWIII\",\"kvarLIII\",\"kvarCIII\",\"kVAIII\",\"PFIII\",\"CosPhiII\",\"Hz\",\"V12\",\"V23\",\"V31\",\"AN\"]",
+        "payloadType": "json",
+        "x": 390,
+        "y": 240,
+        "wires": [
+            [
+                "a34f6e8f281d9505",
+                "9b65c102250fdc0e"
+            ]
+        ]
+    },
+    {
+        "id": "579bee6e9890aec3",
+        "type": "file",
+        "z": "3a33f622b544cc1b",
+        "name": "file",
+        "filename": "filename",
+        "filenameType": "msg",
+        "appendNewline": true,
+        "createDir": true,
+        "overwriteFile": "delete",
+        "encoding": "none",
+        "x": 730,
+        "y": 320,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "a34f6e8f281d9505",
+        "type": "function",
+        "z": "3a33f622b544cc1b",
+        "name": "",
+        "func": "var now = new Date();\n// Create formatted time\nvar yyyy = now.getFullYear();\nvar mm = now.getMonth() < 9 ? \"0\" + (now.getMonth() + 1) : (now.getMonth() + 1); // getMonth() is zero-based\nvar dd = now.getDate() < 10 ? \"0\" + now.getDate() : now.getDate();\nvar hh = now.getHours() < 10 ? \"0\" + now.getHours() : now.getHours();\nvar mmm = now.getMinutes() < 10 ? \"0\" + now.getMinutes() : now.getMinutes();\nvar ss = now.getSeconds() < 10 ? \"0\" + now.getSeconds() : now.getSeconds();\n\nvar path = \"/home/pi/logs/\"; // This is the path    Month+mm+\"/\"\nvar filename = yyyy + \"-\" + mm + \"-\" + dd + \"\\xa0\"+\"Log.csv\"; // file name  \"_\"+hh+mmm+ss+\"   \"_\"+mmm+\nmsg.filename = path + filename;\nreturn msg;",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 560,
+        "y": 320,
+        "wires": [
+            [
+                "579bee6e9890aec3"
+            ]
+        ],
+        "outputLabels": [
+            "msg.filename"
+        ]
+    },
+    {
+        "id": "98d880e63d594a0b",
+        "type": "function",
+        "z": "3a33f622b544cc1b",
+        "name": "build array CVM1",
+        "func": "var regi1 = [\n    //V x 10\n    [msg.payload[0] * 0x1000 + msg.payload[1]   / 10],\n    [msg.payload[16] * 0x1000 + msg.payload[17] / 10],\n    [msg.payload[32] * 0x1000 + msg.payload[33] / 10],\n\n    //Currents x 1000\n    [msg.payload[2] * 0x1000 + msg.payload[3]   / 1000],\n    [msg.payload[18] * 0x1000 + msg.payload[19] / 1000],\n    [msg.payload[34] * 0x1000 + msg.payload[35] / 1000],\n\n    //kWs\n    [msg.payload[4] * 0x1000 + msg.payload[5]   / 1],\n    [msg.payload[20] * 0x1000 + msg.payload[21] / 1],\n    [msg.payload[36] * 0x1000 + msg.payload[37] / 1],\n\n    //kVArL\n    [msg.payload[6] * 0x1000 + msg.payload[7]   / 1],\n    [msg.payload[22] * 0x1000 + msg.payload[23] / 1],\n    [msg.payload[38] * 0x1000 + msg.payload[39] / 1],\n\n    //kVArC\n    [msg.payload[8] * 0x1000 + msg.payload[9]   / 1],\n    [msg.payload[24] * 0x1000 + msg.payload[25] / 1],\n    [msg.payload[40] * 0x1000 + msg.payload[41] / 1],\n\n    //kVA\n    [msg.payload[10] * 0x1000 + msg.payload[11] / 1],\n    [msg.payload[26] * 0x1000 + msg.payload[27] / 1],\n    [msg.payload[42] * 0x1000 + msg.payload[43] / 1],\n\n    //PF x100\n    [msg.payload[12] * 0x1000 + msg.payload[13] / 1],\n    [msg.payload[28] * 0x1000 + msg.payload[29] / 1],\n    [msg.payload[44] * 0x1000 + msg.payload[45] / 1],\n\n    //CosPhi x 100\n    [msg.payload[14] * 0x1000 + msg.payload[15] / 1],\n    [msg.payload[30] * 0x1000 + msg.payload[31] / 1],\n    [msg.payload[46] * 0x1000 + msg.payload[47] / 1],\n    \n    //kWIII, kvarLIII, kvarCIII, kVAIII\n    [msg.payload[48] * 0x1000 + msg.payload[49] / 1],\n    [msg.payload[50] * 0x1000 + msg.payload[51] / 1],\n    [msg.payload[52] * 0x1000 + msg.payload[53] / 1],\n    [msg.payload[54] * 0x1000 + msg.payload[55] / 1],\n    \n    // PFIII, CosPhiII\n    [msg.payload[56] * 0x1000 + msg.payload[57] / 100],\n    [msg.payload[58] * 0x1000 + msg.payload[59] / 100],\n\n    //Hz\n    [msg.payload[60] * 0x1000 + msg.payload[61] / 100],\n\n    //U\n    [msg.payload[62] * 0x1000 + msg.payload[63] / 10],\n    [msg.payload[64] * 0x1000 + msg.payload[65] / 10],\n    [msg.payload[66] * 0x1000 + msg.payload[67] / 10],\n\n    //AN\n    [msg.payload[68] * 0x1000 + msg.payload[69] / 1000]];\nmsg.payload = regi1;\nreturn msg;",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 410,
+        "y": 120,
+        "wires": [
+            [
+                "b428ee785b40538a"
+            ]
+        ]
+    },
+    {
+        "id": "b428ee785b40538a",
+        "type": "ui_template",
+        "z": "3a33f622b544cc1b",
+        "group": "2702adcb99ee2f30",
+        "name": "CVM1",
+        "order": 3,
+        "width": 2,
+        "height": 19,
+        "format": "<table id=\"table\" border=\".1\" class=\"sortable\">\n <tr>\n <th>CVM1</th>\n </tr>\n <tbody>\n <tr ng-repeat=\"row in msg.payload\">\n <td ng-repeat=\"item in row\" >{{item}}</td>\n </tr>\n </tbody>\n</table>\n\n",
+        "storeOutMessages": false,
+        "fwdInMessages": true,
+        "resendOnRefresh": false,
+        "templateScope": "local",
+        "className": "",
+        "x": 730,
+        "y": 120,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "aa899fd136b70388",
+        "type": "ui_template",
+        "z": "3a33f622b544cc1b",
+        "group": "2702adcb99ee2f30",
+        "name": "Tables Styles",
+        "order": 42,
+        "width": 6,
+        "height": 1,
+        "format": "<style>\n    #table {\n    //    font-family: Arial, Helvetica, sans-serif;\n        border-collapse: collapse;\n        width: 90%;\n    }\n\n    #table td,\n    #table th {\n        border: 1px solid #ddd;\n        padding: 0px;\n   }\n\n    #table tr:nth-child(even) {\n        background-color:#f2f2f2 ; //green\n    }\n\n    #table tr:hover {\n        background-color: #ddd;\n    }\n\n    #table th {\n        padding-top: 5px;\n        padding-bottom: 2px;\n        text-align: center;\n        background-color: yellow ;#04AA6D\n        color: white;\n    }\n</style>",
+        "storeOutMessages": false,
+        "fwdInMessages": true,
+        "resendOnRefresh": false,
+        "templateScope": "global",
+        "className": "",
+        "x": 730,
+        "y": 380,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "e4b71f42fcd48dc6",
+        "type": "link out",
+        "z": "3a33f622b544cc1b",
+        "name": "link out 1",
+        "mode": "link",
+        "links": [
+            "b151beaf15cf59c5"
+        ],
+        "x": 335,
+        "y": 280,
+        "wires": []
+    },
+    {
+        "id": "bb4c630ae0dd6975",
+        "type": "function",
+        "z": "3a33f622b544cc1b",
+        "name": "function 19",
+        "func": "msg.payload = msg.payload[15]\n//<< 16) >> 16\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 370,
+        "y": 400,
+        "wires": [
+            [
+                "d0b7ab622b8f7159"
+            ]
+        ]
+    },
+    {
+        "id": "d0b7ab622b8f7159",
+        "type": "debug",
+        "z": "3a33f622b544cc1b",
+        "name": "debug 211",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 710,
+        "y": 520,
+        "wires": []
+    },
+    {
+        "id": "bf8345cbe03a0f15",
+        "type": "function",
+        "z": "3a33f622b544cc1b",
+        "name": "function 20",
+        "func": "msg.payload = msg.payload[14]\n//<< 16) >> 16\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 370,
+        "y": 460,
+        "wires": [
+            [
+                "d0b7ab622b8f7159"
+            ]
+        ]
+    },
+    {
+        "id": "29e54e5ad8dcbd66",
+        "type": "modbus-client",
+        "name": "",
+        "clienttype": "serial",
+        "bufferCommands": true,
+        "stateLogEnabled": false,
+        "queueLogEnabled": false,
+        "failureLogEnabled": true,
+        "tcpHost": "127.0.0.1",
+        "tcpPort": "502",
+        "tcpType": "DEFAULT",
+        "serialPort": "/dev/ttyUSB0",
+        "serialType": "RTU-BUFFERD",
+        "serialBaudrate": "9600",
+        "serialDatabits": "8",
+        "serialStopbits": "1",
+        "serialParity": "none",
+        "serialConnectionDelay": "100",
+        "serialAsciiResponseStartDelimiter": "0x3A",
+        "unit_id": "1",
+        "commandDelay": "1",
+        "clientTimeout": "1000",
+        "reconnectOnTimeout": true,
+        "reconnectTimeout": "2000",
+        "parallelUnitIdsAllowed": true
+    },
+    {
+        "id": "2702adcb99ee2f30",
+        "type": "ui_group",
+        "name": "Measurements",
+        "tab": "9fa73108ebd10193",
+        "order": 2,
+        "disp": true,
+        "width": "18",
+        "collapse": true,
+        "className": ""
+    },
+    {
+        "id": "9fa73108ebd10193",
+        "type": "ui_tab",
+        "name": "CVM",
+        "icon": "dashboard",
+        "order": 1,
+        "disabled": false,
+        "hidden": false
+    }
+]
